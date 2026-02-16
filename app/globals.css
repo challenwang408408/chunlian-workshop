@@ -1,177 +1,655 @@
+/* ============================================================
+   AI 春联工坊 — 春节主题视觉设计
+   色彩体系：中国红 + 帝王金 + 暖白
+   ============================================================ */
+
 :root {
-  --bg: #f7f3ea;
-  --panel: #fffdf9;
-  --text: #2b2118;
-  --muted: #7a6654;
-  --primary: #9f1f1f;
-  --primary-hover: #841818;
-  --border: #e8dccb;
-  --error: #b00020;
+  --red-deep: #8b1a1a;
+  --red: #c0392b;
+  --red-bright: #e74c3c;
+  --red-light: #f9e8e8;
+  --gold: #d4a017;
+  --gold-light: #f0d68a;
+  --gold-pale: #fdf5d6;
+  --cream: #fef9f0;
+  --brown: #4a2c2a;
+  --brown-light: #7a5c58;
+  --text: #2b1810;
+  --text-muted: #8a6d60;
+  --border-gold: #d4a01744;
+  --shadow-red: rgba(139, 26, 26, 0.15);
+  --shadow-gold: rgba(212, 160, 23, 0.2);
 }
 
-* {
-  box-sizing: border-box;
-}
+* { box-sizing: border-box; margin: 0; }
 
+/* ---- Global background with decorative pattern ---- */
 body {
-  margin: 0;
+  min-height: 100vh;
   color: var(--text);
-  background:
-    radial-gradient(circle at 20% 0%, #f0e2ca 0%, transparent 40%),
-    radial-gradient(circle at 80% 100%, #f3dcc9 0%, transparent 35%),
-    var(--bg);
-  font-family: "Noto Serif SC", "Songti SC", "Source Han Serif SC", serif;
+  font-family: "Noto Serif SC", "Songti SC", "Source Han Serif SC", Georgia, serif;
+  background: var(--red-deep);
+  background-image:
+    radial-gradient(ellipse at 15% 10%, rgba(212,160,23,0.12) 0%, transparent 50%),
+    radial-gradient(ellipse at 85% 90%, rgba(212,160,23,0.10) 0%, transparent 50%),
+    radial-gradient(ellipse at 50% 50%, rgba(180,40,40,0.3) 0%, transparent 70%);
+  overflow-x: hidden;
+  position: relative;
 }
 
+/* Floating particles container */
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 0;
+  background-image:
+    radial-gradient(2px 2px at 10% 20%, var(--gold-light) 50%, transparent 50%),
+    radial-gradient(2px 2px at 25% 60%, var(--gold-light) 50%, transparent 50%),
+    radial-gradient(3px 3px at 40% 15%, var(--gold) 50%, transparent 50%),
+    radial-gradient(2px 2px at 55% 75%, var(--gold-light) 50%, transparent 50%),
+    radial-gradient(3px 3px at 70% 30%, var(--gold) 50%, transparent 50%),
+    radial-gradient(2px 2px at 85% 55%, var(--gold-light) 50%, transparent 50%),
+    radial-gradient(2px 2px at 95% 80%, var(--gold) 50%, transparent 50%),
+    radial-gradient(3px 3px at 5% 85%, var(--gold-light) 50%, transparent 50%),
+    radial-gradient(2px 2px at 60% 45%, var(--gold-light) 50%, transparent 50%),
+    radial-gradient(2px 2px at 30% 90%, var(--gold) 50%, transparent 50%);
+  animation: sparkle 8s ease-in-out infinite alternate;
+  opacity: 0.6;
+}
+
+@keyframes sparkle {
+  0% { opacity: 0.4; transform: translateY(0); }
+  50% { opacity: 0.7; }
+  100% { opacity: 0.4; transform: translateY(-12px); }
+}
+
+/* ---- Page layout ---- */
 .page {
   min-height: 100vh;
-  display: grid;
-  place-items: center;
-  padding: 24px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 32px 16px 48px;
+  position: relative;
+  z-index: 1;
 }
 
+/* ---- Header ---- */
+.header {
+  text-align: center;
+  margin-bottom: 28px;
+  position: relative;
+}
+
+.header-lanterns {
+  display: flex;
+  justify-content: center;
+  gap: 24px;
+  margin-bottom: 12px;
+  font-size: 36px;
+  filter: drop-shadow(0 4px 12px rgba(255,100,0,0.4));
+}
+
+.lantern {
+  display: inline-block;
+  animation: sway 3s ease-in-out infinite;
+}
+
+.lantern:nth-child(2) { animation-delay: -0.8s; }
+.lantern:nth-child(3) { animation-delay: -1.6s; }
+
+@keyframes sway {
+  0%, 100% { transform: rotate(-5deg); }
+  50% { transform: rotate(5deg); }
+}
+
+.header h1 {
+  font-family: "Ma Shan Zheng", "Noto Serif SC", cursive;
+  font-size: clamp(36px, 6vw, 56px);
+  color: var(--gold-light);
+  text-shadow: 0 2px 8px rgba(0,0,0,0.4), 0 0 40px rgba(212,160,23,0.3);
+  letter-spacing: 0.08em;
+  line-height: 1.3;
+}
+
+.header-sub {
+  color: rgba(255,220,180,0.7);
+  font-size: 14px;
+  margin-top: 6px;
+  letter-spacing: 0.1em;
+}
+
+/* ---- Gold decorative divider ---- */
+.divider {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin: 0 auto 24px;
+  max-width: 300px;
+}
+
+.divider::before,
+.divider::after {
+  content: "";
+  flex: 1;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, var(--gold), transparent);
+}
+
+.divider-icon {
+  color: var(--gold);
+  font-size: 18px;
+}
+
+/* ---- Main panel / card ---- */
 .panel {
-  width: min(900px, 100%);
-  background: var(--panel);
-  border: 1px solid var(--border);
-  border-radius: 16px;
-  padding: 24px;
-  box-shadow: 0 20px 40px rgba(73, 53, 33, 0.08);
+  width: min(680px, 100%);
+  background: linear-gradient(165deg, #fffdf8 0%, #fef6e8 100%);
+  border: 2px solid var(--gold);
+  border-radius: 20px;
+  padding: 32px 28px;
+  box-shadow:
+    0 0 0 1px var(--border-gold),
+    0 8px 32px var(--shadow-red),
+    0 2px 12px var(--shadow-gold),
+    inset 0 1px 0 rgba(255,255,255,0.8);
+  position: relative;
+  overflow: hidden;
 }
 
-h1 {
-  margin: 0 0 8px;
-  font-size: clamp(28px, 4vw, 40px);
+/* Corner ornaments */
+.panel::before,
+.panel::after {
+  content: "◆";
+  position: absolute;
+  color: var(--gold);
+  font-size: 14px;
+  opacity: 0.5;
 }
 
-h2 {
-  margin: 0 0 8px;
-  font-size: 22px;
+.panel::before { top: 12px; left: 14px; }
+.panel::after { top: 12px; right: 14px; }
+
+.panel-title {
+  font-family: "Ma Shan Zheng", "Noto Serif SC", cursive;
+  font-size: 24px;
+  color: var(--red-deep);
+  text-align: center;
+  margin-bottom: 20px;
+  position: relative;
 }
 
-.muted {
-  margin-top: 0;
-  color: var(--muted);
-}
-
+/* ---- Form ---- */
 .form {
   display: grid;
-  gap: 12px;
-  margin-top: 16px;
+  gap: 14px;
 }
 
-.row {
+.form-row {
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
   gap: 12px;
 }
 
-label {
-  display: grid;
-  gap: 6px;
-  font-weight: 600;
+.field {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
 }
 
-input {
+.field-label {
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--brown);
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.field-label .icon {
+  font-size: 15px;
+}
+
+.field-input {
   width: 100%;
-  border: 1px solid var(--border);
+  border: 1.5px solid #e0cba0;
   border-radius: 10px;
   min-height: 44px;
-  padding: 10px 12px;
+  padding: 10px 14px;
   font-size: 15px;
-  background: #fff;
+  font-family: inherit;
+  background: #fffef9;
+  color: var(--text);
+  transition: border-color 0.2s, box-shadow 0.2s;
+  outline: none;
 }
 
-button {
-  width: fit-content;
-  min-height: 44px;
-  border: 0;
-  border-radius: 10px;
-  padding: 10px 16px;
-  color: #fff;
-  background: var(--primary);
+.field-input::placeholder {
+  color: #c4a882;
+}
+
+.field-input:focus {
+  border-color: var(--gold);
+  box-shadow: 0 0 0 3px rgba(212, 160, 23, 0.15);
+}
+
+.field-input:disabled {
+  background: #f5efe5;
+  opacity: 0.7;
+}
+
+/* ---- Buttons ---- */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  min-height: 46px;
+  border: none;
+  border-radius: 12px;
+  padding: 12px 24px;
+  font-size: 15px;
+  font-weight: 700;
+  font-family: inherit;
   cursor: pointer;
-  font-size: 15px;
+  transition: all 0.25s ease;
+  position: relative;
+  overflow: hidden;
 }
 
-button:hover:enabled {
-  background: var(--primary-hover);
+.btn-primary {
+  width: 100%;
+  color: var(--gold-pale);
+  background: linear-gradient(135deg, var(--red-deep) 0%, var(--red) 50%, var(--red-bright) 100%);
+  box-shadow: 0 4px 16px var(--shadow-red), inset 0 1px 0 rgba(255,255,255,0.15);
+  font-size: 17px;
+  letter-spacing: 0.06em;
 }
 
-button:disabled {
+.btn-primary:hover:enabled {
+  transform: translateY(-1px);
+  box-shadow: 0 6px 24px var(--shadow-red);
+  filter: brightness(1.05);
+}
+
+.btn-primary:active:enabled {
+  transform: translateY(0);
+}
+
+.btn-secondary {
+  color: #fff;
+  background: linear-gradient(135deg, var(--brown) 0%, var(--brown-light) 100%);
+  box-shadow: 0 2px 8px rgba(74, 44, 42, 0.2);
+}
+
+.btn-secondary:hover:enabled {
+  filter: brightness(1.1);
+  transform: translateY(-1px);
+}
+
+.btn-gold {
+  color: var(--brown);
+  background: linear-gradient(135deg, var(--gold-light) 0%, var(--gold) 100%);
+  box-shadow: 0 2px 12px var(--shadow-gold);
+}
+
+.btn-gold:hover:enabled {
+  filter: brightness(1.05);
+  transform: translateY(-1px);
+}
+
+.btn:disabled {
   cursor: not-allowed;
-  opacity: 0.6;
+  opacity: 0.5;
+  transform: none !important;
+  filter: grayscale(0.3);
 }
 
-button.secondary {
-  background: #68523d;
-}
-
-.error {
-  color: var(--error);
-  margin: 10px 0 0;
-  overflow-wrap: anywhere;
-}
-
-.hint {
-  margin: 10px 0 0;
-  color: var(--muted);
-  overflow-wrap: anywhere;
-}
-
-.result {
+/* ---- Loading overlay ---- */
+.loading-overlay {
   margin-top: 20px;
-  border-top: 1px dashed var(--border);
-  padding-top: 16px;
-  display: grid;
+  padding: 28px 20px;
+  border-radius: 16px;
+  background: linear-gradient(135deg, var(--red-deep) 0%, #6b1515 100%);
+  color: #ffecd2;
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+}
+
+.loading-overlay::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: repeating-linear-gradient(
+    45deg,
+    transparent,
+    transparent 20px,
+    rgba(212,160,23,0.04) 20px,
+    rgba(212,160,23,0.04) 40px
+  );
+  pointer-events: none;
+}
+
+.loading-lantern {
+  font-size: 48px;
+  display: inline-block;
+  animation: float 2s ease-in-out infinite;
+  filter: drop-shadow(0 4px 16px rgba(255,150,0,0.5));
+  position: relative;
+  z-index: 1;
+}
+
+@keyframes float {
+  0%, 100% { transform: translateY(0) rotate(-3deg); }
+  50% { transform: translateY(-10px) rotate(3deg); }
+}
+
+.loading-message {
+  font-size: 17px;
+  font-weight: 600;
+  margin-top: 12px;
+  position: relative;
+  z-index: 1;
+  min-height: 1.5em;
+}
+
+/* Stage progress */
+.loading-stages {
+  display: flex;
+  justify-content: center;
   gap: 6px;
+  margin-top: 16px;
+  position: relative;
+  z-index: 1;
 }
 
-.result p {
-  margin: 0;
-  line-height: 1.6;
-  overflow-wrap: anywhere;
+.stage-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: rgba(255, 220, 180, 0.25);
+  transition: all 0.4s ease;
 }
 
-.actions {
+.stage-dot.active {
+  background: var(--gold);
+  box-shadow: 0 0 8px var(--gold);
+  transform: scale(1.3);
+}
+
+.stage-dot.done {
+  background: var(--gold-light);
+}
+
+/* Elapsed timer */
+.loading-timer {
+  font-size: 12px;
+  color: rgba(255, 220, 180, 0.5);
+  margin-top: 12px;
+  font-variant-numeric: tabular-nums;
+  position: relative;
+  z-index: 1;
+}
+
+/* Progress shimmer bar */
+.loading-bar {
+  margin-top: 16px;
+  height: 4px;
+  border-radius: 2px;
+  background: rgba(255,255,255,0.1);
+  overflow: hidden;
+  position: relative;
+  z-index: 1;
+}
+
+.loading-bar-fill {
+  height: 100%;
+  border-radius: 2px;
+  background: linear-gradient(90deg, var(--gold), var(--gold-light), var(--gold));
+  background-size: 200% 100%;
+  animation: shimmer 1.5s ease-in-out infinite;
+  transition: width 1s ease;
+}
+
+@keyframes shimmer {
+  0% { background-position: -200% 0; }
+  100% { background-position: 200% 0; }
+}
+
+/* ---- Couplet result (scroll 卷轴 style) ---- */
+.result-section {
+  margin-top: 24px;
+}
+
+.scroll-container {
+  background: linear-gradient(180deg, #fdf2e0 0%, #fbe8c8 100%);
+  border: 2px solid var(--gold);
+  border-radius: 16px;
+  padding: 0;
+  overflow: hidden;
+  box-shadow: 0 4px 20px var(--shadow-gold);
+  animation: resultEnter 0.6s ease-out;
+}
+
+@keyframes resultEnter {
+  from { opacity: 0; transform: translateY(20px) scale(0.97); }
+  to { opacity: 1; transform: translateY(0) scale(1); }
+}
+
+/* Scroll top bar (横批 area) */
+.scroll-top {
+  background: linear-gradient(135deg, var(--red-deep) 0%, #a01020 100%);
+  padding: 16px 20px;
+  text-align: center;
+  position: relative;
+}
+
+.scroll-top::after {
+  content: "";
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 3px;
+  background: linear-gradient(90deg, transparent, var(--gold), transparent);
+}
+
+.horizontal-banner {
+  font-family: "Ma Shan Zheng", "Noto Serif SC", cursive;
+  font-size: clamp(28px, 5vw, 40px);
+  color: var(--gold-light);
+  text-shadow: 0 2px 6px rgba(0,0,0,0.3);
+  letter-spacing: 0.15em;
+}
+
+/* Couplet body */
+.scroll-body {
+  padding: 24px 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.couplet-line {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  padding: 12px 16px;
+  background: rgba(255, 255, 255, 0.5);
+  border-radius: 10px;
+  border-left: 4px solid var(--red);
+}
+
+.couplet-label {
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--red-deep);
+  white-space: nowrap;
+  padding-top: 2px;
+  min-width: 36px;
+}
+
+.couplet-text {
+  font-family: "Ma Shan Zheng", "Noto Serif SC", cursive;
+  font-size: clamp(20px, 3.5vw, 28px);
+  color: var(--text);
+  line-height: 1.4;
+  letter-spacing: 0.08em;
+}
+
+/* Explanation section */
+.explanation {
+  padding: 14px 16px;
+  background: rgba(212, 160, 23, 0.08);
+  border-radius: 10px;
+  border: 1px dashed var(--border-gold);
+}
+
+.explanation-title {
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--gold);
+  margin-bottom: 6px;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.explanation-text {
+  font-size: 14px;
+  line-height: 1.7;
+  color: var(--brown-light);
+}
+
+/* Style tags */
+.tags {
   display: flex;
   flex-wrap: wrap;
-  gap: 8px;
-  margin-top: 8px;
+  gap: 6px;
+  padding: 0 16px;
 }
 
-.poster {
-  margin-top: 12px;
-  border: 1px solid var(--border);
-  border-radius: 12px;
+.tag {
+  display: inline-block;
+  padding: 4px 12px;
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--red-deep);
+  background: var(--gold-pale);
+  border: 1px solid var(--gold-light);
+  border-radius: 20px;
+}
+
+/* Action buttons row */
+.scroll-actions {
+  padding: 16px 20px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  border-top: 1px solid var(--border-gold);
+  background: rgba(255,255,255,0.3);
+}
+
+/* ---- Poster section ---- */
+.poster-wrapper {
+  margin-top: 16px;
+  border: 2px solid var(--gold);
+  border-radius: 14px;
   overflow: hidden;
   background: #fff;
+  box-shadow: 0 4px 20px var(--shadow-gold);
+  animation: resultEnter 0.6s ease-out;
 }
 
-.poster img {
+.poster-wrapper img {
   display: block;
   width: 100%;
   height: auto;
 }
 
-@media (max-width: 768px) {
+/* ---- Error ---- */
+.error-msg {
+  margin-top: 14px;
+  padding: 12px 16px;
+  border-radius: 10px;
+  background: #fff0f0;
+  border: 1px solid #f5c6cb;
+  color: #a01020;
+  font-size: 14px;
+  line-height: 1.6;
+  overflow-wrap: anywhere;
+}
+
+/* ---- Copy toast ---- */
+.toast {
+  margin-top: 8px;
+  padding: 8px 14px;
+  border-radius: 8px;
+  background: rgba(212, 160, 23, 0.12);
+  color: var(--brown);
+  font-size: 13px;
+  text-align: center;
+}
+
+/* ---- Footer ---- */
+.footer {
+  margin-top: 36px;
+  text-align: center;
+  color: rgba(255, 220, 180, 0.4);
+  font-size: 12px;
+  letter-spacing: 0.05em;
+}
+
+.footer a {
+  color: rgba(255, 220, 180, 0.6);
+  text-decoration: none;
+}
+
+.footer a:hover {
+  color: var(--gold-light);
+}
+
+/* ---- Responsive ---- */
+@media (max-width: 640px) {
   .page {
-    padding: 12px;
+    padding: 16px 10px 32px;
   }
 
   .panel {
-    padding: 16px;
+    padding: 20px 16px;
+    border-radius: 14px;
   }
 
-  .row {
+  .form-row {
     grid-template-columns: 1fr;
   }
 
-  button {
+  .header-lanterns {
+    font-size: 28px;
+    gap: 16px;
+  }
+
+  .scroll-actions {
+    flex-direction: column;
+  }
+
+  .scroll-actions .btn {
     width: 100%;
   }
 
-  .actions button {
-    width: 100%;
+  .loading-stages {
+    gap: 5px;
+  }
+}
+
+/* ---- Accessibility: reduced motion ---- */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
   }
 }

@@ -44,13 +44,17 @@ function parsePosterRequest(payload: unknown): { ok: true; data: PosterRequest }
 
 function buildPrompt(input: PosterRequest): string {
   return [
-    "请生成一张中国春节对联主题海报。",
+    "请生成一张中国春节对联主题海报（竖版 2:3 比例）。",
     `主题：${input.theme}`,
     `风格：${input.style && input.style.length > 0 ? input.style : "喜庆、年味、国风"}`,
     `横批：${input.horizontal}`,
     `上联：${input.topLine}`,
     `下联：${input.bottomLine}`,
-    "画面要求：竖版海报构图，红金主色，留白适中，文字清晰可读，适合社交分享封面。",
+    "布局要求：",
+    "- 横批位于画面上方居中位置，距离顶部边缘留有充足的装饰空白，确保横批文字完整显示不被裁切。",
+    "- 上联在画面右侧竖排书写，下联在画面左侧竖排书写，符合传统对联从右到左的阅读顺序。",
+    "- 所有文字（横批、上联、下联）必须完整处于画面安全区域内，距离图片四边至少保留 8% 的边距。",
+    "画面要求：红金主色调，传统中国风装饰纹样，文字清晰可读，适合社交分享封面。",
   ].join("\n");
 }
 
@@ -96,7 +100,7 @@ export async function POST(request: Request) {
         body: JSON.stringify({
           model: DEFAULT_IMAGE_MODEL,
           prompt: buildPrompt(parsedRequest.data),
-          size: "1024x1024",
+          size: "1024x1536",
         }),
       },
       REQUEST_TIMEOUT_MS,
