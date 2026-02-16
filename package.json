@@ -1,0 +1,25 @@
+{
+  "name": "chunlian-workshop",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "lint": "next lint",
+    "smoke": "bash scripts/smoke.sh"
+  },
+  "dependencies": {
+    "next": "^15.5.12",
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1"
+  },
+  "devDependencies": {
+    "@types/node": "^25.2.3",
+    "@types/react": "^18.3.28",
+    "@types/react-dom": "^18.3.7",
+    "eslint": "^9.39.2",
+    "eslint-config-next": "^15.5.12",
+    "typescript": "^5.9.3"
+  }
+}
